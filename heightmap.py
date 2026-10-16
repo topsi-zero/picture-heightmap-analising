@@ -1,22 +1,32 @@
-palette = [
-    (0,   (100, 135, 65)),   # Muted olive green
-    (140, (100, 135, 65)),   # Green ends
-    (175, (155, 105, 70)),   # Brown
-    (220, (155, 155, 155)),  # Gray
-    (245, (245, 243, 238)),  # White
-]
 
 def color_height(pixels: list):
     for pixel in pixels:
-        for i in range(len(palette) -1):
-            h0, c0 = palette[i]
-            h1, c1 = palette[i + 1]
+
+        brightness = pixel.r / 255.0
+
+        if pixel.r > 250:
+            base_color = (245, 243, 238)  # White
             
-            if h0 <= pixel.g <= h1:
-                t = (pixel.g - h0) / (h1 -h0)
-                
-                pixel.r = int(c0[0] + t * (c1[0] - c0[0]))
-                pixel.g = int(c0[1] + t * (c1[1] - c0[1]))
-                pixel.b = int(c0[2] + t * (c1[2] - c0[2]))
-                
-                pixel.set_color()
+        elif pixel.r > 210:
+            base_color = (155, 155, 155)  # Gray
+            
+        elif pixel.r > 140:
+            base_color = (155, 105, 70)   # Brown
+            
+        elif pixel.r > 90:
+            base_color = (130, 85, 50)    # dark brown
+            
+        elif pixel.r > 2:
+            base_color = (80, 115, 45)    # dark Green
+            
+        elif pixel.r < 2:
+            base_color = (0, 109, 190)        # blue 
+
+        shade = 0.5 + brightness * 0.7
+
+        pixel.color = tuple(
+            max(0, min(255, int(channel * shade)))
+            for channel in base_color
+        )
+        
+    print('\nHeightmap Colored')

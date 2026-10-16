@@ -26,10 +26,12 @@ class Pixel:
 pixels = []
 pixelcount = 0
 
-img_path = "assets/" + str(input("input the name of the file in the assets folder (-> filename.sufix <-): "))
+img_path = "assets/" + str(input("input the name of the file in the assets folder (-> filename.sufix <-)\nFilename: "))
 
 img = Image.open(img_path)
 width, height = img.size
+
+# definitions
 
 
 def get_pixels(img_path):
@@ -52,7 +54,7 @@ def get_pixels(img_path):
             pixels.append(pixel)
             pixelcount += 1
             
-    print(f'{pixelcount} pixels analised')
+    print(f'\n{pixelcount} pixels analised')
     
                         
 def new_image(width, height):
@@ -71,7 +73,7 @@ def mode(pixels):
     in_mode: str = None
     
     while not in_mode in allowed_answers:
-        in_mode = str(input('\nChose your option (-> number <-): \n(1) pure RGB\n(2) Black and White \n(3) Random Color \n(4) Invert \n(5) Half invertied \n(6) single channel \n(7) colored heightmap \nInput: '))
+        in_mode = str(input('\nChose your option (-> number <-): \n(1) pure RGB\n(2) Black and White \n(3) Random Color \n(4) Invert \n(5) Half invert \n(6) single color channel \n(7) colored heightmap \nInput: '))
         
     if in_mode == '1':
         ult.pure_rgb(pixels)
