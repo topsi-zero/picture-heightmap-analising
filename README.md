@@ -1,2 +1,2 @@
-## A simple tool to edit pictures
+## A simple tool to edit pictures and color heightmaps
 
