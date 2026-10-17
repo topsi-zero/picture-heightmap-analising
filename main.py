@@ -98,7 +98,6 @@ def mode(pixels):
     while not in_mode in allowed_answers:
         in_mode = str(input('\n\nChose your option (-> number <-): \n(1) pure RGB\n(2) Black and White \n(3) Random Color \n(4) Invert \n(5) Half invert \n(6) single color channel \n\nHeightmap options: \n(7) colored heightmap \nInput: '))
 
-    print('\n')
     if in_mode == '1':
         ult.pure_rgb(pixels)
     

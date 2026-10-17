@@ -163,4 +163,6 @@ assets/pictures/flower.png
 assets/pictures/deer.png
 assets/pictures/wildlife.png
 
-assets/pictures/not_allowed/
+assets/pictures/not_allowed
+
+.DS_Store
