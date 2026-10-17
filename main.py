@@ -26,13 +26,16 @@ class Pixel:
 pixels = []
 pixelcount = 0
 
-img_path = "assets/" + str(input("input the name of the file in the assets folder (-> filename.sufix <-)\nFilename: "))
+folder = str(input('\ninput folders name, if current directory press enter \nInput: '))
+filename = str(input('\ninput the filename including suffix (-> filename.suffix <-)\nInput: '))
+img_path = "assets/" + folder + '/' + filename
+
+print(f'\nscanning image: {folder}/{filename}')
 
 img = Image.open(img_path)
 width, height = img.size
 
 # definitions
-
 
 def get_pixels(img_path):
     global pixels, pixelcount
@@ -54,16 +57,19 @@ def get_pixels(img_path):
             pixels.append(pixel)
             pixelcount += 1
             
+            
     print(f'\n{pixelcount} pixels analised')
     
                         
 def new_image(width, height):
+    global filename
+    
     output_img = Image.new("RGB", (width, height), color = (0,0,0))
     
     for pixel in pixels:
         output_img.putpixel((pixel.x, pixel.y), pixel.color)
         
-    output_img.save("output/result.png")
+    output_img.save(f"output/{filename}_colored.png")
     
     
 def mode(pixels):
