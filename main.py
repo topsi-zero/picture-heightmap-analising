@@ -26,13 +26,24 @@ class Pixel:
 pixels = []
 pixelcount = 0
 
-folder = str(input('\ninput folders name, if current directory press enter \nInput: '))
-filename = str(input('\ninput the filename including suffix (-> filename.suffix <-)\nInput: '))
+folder = str(input('\ninput folder structure and name/s, if directly in assets folder press enter (-> foldername or foldername/subfolder <-)\nInput: assets/'))
+filename = str(input(f'\ninput the filename including suffix (-> filename.suffix <-)\nInput: assets/{folder}/'))
+
+name = filename.split('.')
+
+name = name[0]
+
 img_path = "assets/" + folder + '/' + filename
 
-print(f'\nscanning image: {folder}/{filename}')
+print(f'\nscanning image: assets/{folder}/{filename}\n')
 
-img = Image.open(img_path)
+try:
+    img = Image.open(img_path)
+
+except FileNotFoundError:
+    print(f'\n\nError: No such FILE or DIRECTORY: assets/{folder}/{filename}\n\n')
+    exit()
+
 width, height = img.size
 
 # definitions
@@ -56,20 +67,26 @@ def get_pixels(img_path):
             pixel = Pixel(r, g, b, x, y)
             pixels.append(pixel)
             pixelcount += 1
+
+            print(f'\r[ {pixelcount} / {width * height} ] pixels analised', end='', flush=True)
             
-            
-    print(f'\n{pixelcount} pixels analised')
     
                         
-def new_image(width, height):
+def new_image(width, height, option: bool = False):
     global filename
+    written_pixels = 0
     
     output_img = Image.new("RGB", (width, height), color = (0,0,0))
     
     for pixel in pixels:
         output_img.putpixel((pixel.x, pixel.y), pixel.color)
-        
-    output_img.save(f"output/{filename}_colored.png")
+
+        written_pixels += 1
+        print(f'\r[ {written_pixels} / {len(pixels)} ] pixels written', end='', flush=True)
+
+    output_img.save(f"output/{name}_changed.png" if not option else f"output/{name}_heightmap.png")
+
+    print('\n\nnew image saved')
     
     
 def mode(pixels):
@@ -79,8 +96,9 @@ def mode(pixels):
     in_mode: str = None
     
     while not in_mode in allowed_answers:
-        in_mode = str(input('\nChose your option (-> number <-): \n(1) pure RGB\n(2) Black and White \n(3) Random Color \n(4) Invert \n(5) Half invert \n(6) single color channel \n(7) colored heightmap \nInput: '))
-        
+        in_mode = str(input('\n\nChose your option (-> number <-): \n(1) pure RGB\n(2) Black and White \n(3) Random Color \n(4) Invert \n(5) Half invert \n(6) single color channel \n\nHeightmap options: \n(7) colored heightmap \nInput: '))
+
+    print('\n')
     if in_mode == '1':
         ult.pure_rgb(pixels)
     
@@ -113,7 +131,4 @@ get_pixels(img_path)
 
 mode(pixels)
 
-new_image(width, height)
-
-print('new Image created')
-
+new_image(width, height, option = True if mode == 7 else False)

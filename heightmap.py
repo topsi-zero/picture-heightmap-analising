@@ -1,6 +1,11 @@
 
 def color_height(pixels: list):
+    print('\n')
+    colored_pixel = 0
+    max_pixels = len(pixels)
+
     for pixel in pixels:
+        colored_pixel += 1
 
         brightness = pixel.r / 255.0
 
@@ -16,10 +21,10 @@ def color_height(pixels: list):
         elif pixel.r > 90:
             base_color = (130, 85, 50)    # dark brown
             
-        elif pixel.r > 2:
+        elif pixel.r > 1:
             base_color = (80, 115, 45)    # dark Green
             
-        elif pixel.r < 2:
+        else:
             base_color = (0, 109, 190)        # blue 
 
         shade = 0.5 + brightness * 0.7
@@ -28,5 +33,7 @@ def color_height(pixels: list):
             max(0, min(255, int(channel * shade)))
             for channel in base_color
         )
+
+        print(f'\r[ {colored_pixel} / {max_pixels} ] pixels colored', end='', flush=True)
         
-    print('\nHeightmap Colored')
+    print('\n\nHeightmap Colored\n')
