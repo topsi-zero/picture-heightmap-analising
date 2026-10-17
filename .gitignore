@@ -162,3 +162,5 @@ cython_debug/
 assets/pictures/flower.png
 assets/pictures/deer.png
 assets/pictures/wildlife.png
+
+assets/pictures/not_allowed/
